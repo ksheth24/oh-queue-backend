@@ -15,7 +15,7 @@ import java.util.Map;
 public class QueueController {
 
     private final QueueService queueService;
-bi
+
     public QueueController(QueueService queueService) {
         this.queueService = queueService;
     }
@@ -33,7 +33,12 @@ bi
 
     @GetMapping("/getQueue")
     public List<QueueEntry> queue() {
-        return queueService.getQueue();
+
+    }
+
+    @GetMapping("/getQueueLength")
+    public Integer getQueueLength() {
+        return queueService.getQueue().size();
     }
 
     @PostMapping("/updateStatus")
