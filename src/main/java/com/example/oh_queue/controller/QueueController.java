@@ -33,7 +33,7 @@ public class QueueController {
 
     @GetMapping("/getQueue")
     public List<QueueEntry> queue() {
-
+        return queueService.getQueue();
     }
 
     @GetMapping("/getQueueLength")
