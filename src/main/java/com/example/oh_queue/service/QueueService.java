@@ -14,7 +14,7 @@ public class QueueService {
         this.queueRepository =  queueRepository;
     }
 
-    public void add(String name, String section, String topic, String location) {
+    public Long add(String name, String section, String topic, String location) {
         boolean inPerson = true;
         if (location.equals("Online")) {
             inPerson = false;
@@ -26,10 +26,16 @@ public class QueueService {
         queueEntry.setInPerson(inPerson);
         queueEntry.setStatus("Queued");
         queueRepository.save(queueEntry);
+        return queueEntry.getId();
     }
 
     public List<QueueEntry> getQueue() {
         return queueRepository.findEntireQueue();
+    }
+
+    public Integer getQueueSpot(Long id) {
+        QueueEntry entry = queueRepository.findById(id).orElseThrow();
+        return queueRepository.getQueueSpot(entry.getJoinedAt());
     }
 
     public void updateRequest(Long id, String status) {

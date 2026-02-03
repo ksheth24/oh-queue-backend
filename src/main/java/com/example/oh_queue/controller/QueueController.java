@@ -25,10 +25,8 @@ public class QueueController {
     public record UpdateRequest(Long id, String status) {}
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody AddRequest addRequest) {
-        queueService.add(addRequest.name, addRequest.section, addRequest.topic, addRequest.location);
-        return ResponseEntity.ok()
-                .body(Map.of("message", "Entry added to queue!"));
+    public Long add(@RequestBody AddRequest addRequest) {
+        return queueService.add(addRequest.name, addRequest.section, addRequest.topic, addRequest.location);
     }
 
     @GetMapping("/getQueue")
@@ -39,6 +37,11 @@ public class QueueController {
     @GetMapping("/getQueueLength")
     public Integer getQueueLength() {
         return queueService.getQueue().size();
+    }
+
+    @GetMapping("/getQueueSpot/{id}")
+    public Integer queueSpot(@PathVariable Long id) {
+        return queueService.getQueueSpot(id);
     }
 
     @PostMapping("/updateStatus")
